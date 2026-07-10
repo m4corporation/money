@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebBankir — первый займ под 0% до 30 000 ₽ за 10 минут</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #eab308;
+            --primary-dark: #ca8a04;
+            --primary-light: #facc15;
+            --bg: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-gray: #262626;
+            --text: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --glow: rgba(234, 179, 8, 0.4);
+            --glow-strong: rgba(234, 179, 8, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 30%, rgba(234, 179, 8, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 70%, rgba(234, 179, 8, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- КНОПКИ --- */
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary);
+            color: #000000;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--glow);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px var(--glow-strong);
+        }
+
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
+
+        /* --- ХЕДЕР --- */
+        .header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: #000000;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: var(--primary-light);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 450px;
+            margin: 0 auto 32px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .hero-terms {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .term-item {
+            text-align: center;
+        }
+
+        .term-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .term-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* --- СЕКЦИИ --- */
+        .section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 450px;
+            margin: 0 auto 32px;
+        }
+
+        /* --- ПРЕИМУЩЕСТВА --- */
+        .benefits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--bg-card);
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .benefit-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(234, 179, 8, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .benefit-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .benefit-text p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* --- ШАГИ --- */
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-card);
+            padding: 20px 24px;
+        }
+
+        .step-num {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: #000000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .step-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .step-text p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* --- ТРЕБОВАНИЯ --- */
+        .req-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .req-box ul {
+            list-style: none;
+        }
+
+        .req-box li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .req-box li:last-child {
+            border-bottom: none;
+        }
+
+        .req-check {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* --- CTA --- */
+        .cta-section {
+            padding: 60px 0 80px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .cta-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        /* --- ФУТЕР --- */
+        .footer {
+            padding: 24px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            font-size: 11px;
+            color: #737373;
+            line-height: 1.6;
+        }
+
+        /* --- АДАПТИВ --- */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero-subtitle {
+                font-size: 15px;
+            }
+            .btn-primary {
+                padding: 14px 30px;
+                font-size: 15px;
+            }
+            .hero-terms {
+                gap: 16px;
+            }
+            .term-value {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ХЕДЕР -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    WebBankir
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">● Срочно</div>
+            <h1>
+                Первый займ<br>
+                <span class="highlight">под 0%</span>
+            </h1>
+            <p class="hero-subtitle">
+                До 30 000 ₽ на карту за 10 минут. Без визита в офис. Круглосуточно.
+            </p>
+            <div class="hero-terms">
+                <div class="term-item">
+                    <div class="term-value">0%</div>
+                    <div class="term-label">Ставка на 21 день</div>
+                </div>
+                <div class="term-item">
+                    <div class="term-value">до 30 000</div>
+                    <div class="term-label">Первый займ</div>
+                </div>
+                <div class="term-item">
+                    <div class="term-value">10 мин</div>
+                    <div class="term-label">Время до денег</div>
+                </div>
+            </div>
+            <a href="#" class="btn-primary">Получить займ</a>
+        </div>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Почему WebBankir</h2>
+            <p class="section-subtitle">Мы делаем деньги доступными, когда они нужны прямо сейчас.</p>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-icon">1</div>
+                    <div class="benefit-text">
+                        <h3>Мгновенное решение</h3>
+                        <p>Заявка рассматривается за 5-10 минут без справок и поручителей.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">2</div>
+                    <div class="benefit-text">
+                        <h3>Деньги на карту</h3>
+                        <p>После одобрения сумма сразу поступает на вашу банковскую карту или по СБП.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">3</div>
+                    <div class="benefit-text">
+                        <h3>Безопасно</h3>
+                        <p>Все данные защищены. Работаем по лицензии ЦБ РФ.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">4</div>
+                    <div class="benefit-text">
+                        <h3>Онлайн 24/7</h3>
+                        <p>Оформляйте займ в любое время — мы работаем круглосуточно.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ШАГИ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Как получить</h2>
+            <p class="section-subtitle">Три простых шага до денег.</p>
+            <div class="steps-list">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-text">
+                        <h3>Заполните заявку</h3>
+                        <p>Понадобятся паспорт и доступ к интернету. Это займёт 3 минуты.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-text">
+                        <h3>Дождитесь решения</h3>
+                        <p>Система проверит данные и примет решение за 5-10 минут.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-text">
+                        <h3>Получите деньги</h3>
+                        <p>Сумма поступит на вашу карту. Погасите в удобный срок.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ТРЕБОВАНИЯ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Кто может получить</h2>
+            <p class="section-subtitle">Проверьте, подходите ли вы.</p>
+            <div class="req-box">
+                <ul>
+                    <li><span class="req-check">✓</span> Гражданство РФ</li>
+                    <li><span class="req-check">✓</span> Возраст от 20 лет</li>
+                    <li><span class="req-check">✓</span> Паспорт</li>
+                    <li><span class="req-check">✓</span> Банковская карта или СБП</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Нужны деньги срочно?</h2>
+            <p class="cta-subtitle">Первый займ под 0%. Оформляйте сейчас.</p>
+            <a href="#" class="btn-primary">Получить займ</a>
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer class="footer">
+        <div class="container">
+            <p style="font-weight: 600; margin-bottom: 8px;">Реклама. ООО МКК «ВЭББАНКИР»</p>
+            <p>ПСК от 0% до 292% годовых. Сумма от 1 000 до 100 000 ₽. Срок от 7 до 365 дней.<br>
+            Первый займ до 30 000 ₽ под 0% на срок до 21 дня.<br>
+            Не является публичной офертой. Условия уточняйте на официальном сайте.</p>
+            <p style="margin-top: 12px; font-size: 10px; color: #525252;">erid: LjN8KTuXh</p>
+        </div>
+    </footer>
+
+</body>
+</html>
