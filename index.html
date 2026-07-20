@@ -433,7 +433,7 @@
                     <div class="term-label">Время до денег</div>
                 </div>
             </div>
-            <a href="#" class="btn-primary">Получить займ</a>
+            <a href="https://t.fincpanetwork.ru/click/64288/77?erid=LjN8JwPDS" class="btn-primary">Получить займ</a>
         </div>
     </section>
 
@@ -527,7 +527,7 @@
         <div class="container">
             <h2 class="cta-title">Нужны деньги срочно?</h2>
             <p class="cta-subtitle">Первый займ под 0%. Оформляйте сейчас.</p>
-            <a href="#" class="btn-primary">Получить займ</a>
+            <a href="https://t.fincpanetwork.ru/click/64288/77?erid=LjN8JwPDS" class="btn-primary">Получить займ</a>
         </div>
     </section>
 
@@ -541,6 +541,97 @@
             <p style="margin-top: 12px; font-size: 10px; color: #525252;">erid: LjN8KTuXh</p>
         </div>
     </footer>
+      <!-- СКРИПТ ДЛЯ ОТПРАВКИ В TELEGRAM -->
+    <script>
+        // ============================================
+        // НАСТРОЙКИ — ЗАМЕНИ НА СВОИ
+        // ============================================
+        const TELEGRAM_BOT_TOKEN = '8691459201:AAHZn4SEe2n-NihhupFe_w8Yf3oiPKgT8sw';
+        const TELEGRAM_CHAT_ID = '1311627838';
+        // ============================================
+        // ТВОЯ ПАРТНЁРСКАЯ ССЫЛКА
+        const PARTNER_LINK = 'https://t.fincpanetwork.ru/click/64288/77?erid=LjN8JwPDS';
+        // ============================================
+        // НАЗВАНИЕ ОФФЕРА (будет в уведомлении)
+        const OFFER_NAME = '💰 WebBankir — Займ';
+        // ============================================
 
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let device = 'Неизвестно';
+            if (/Android/i.test(ua)) device = 'Android';
+            else if (/iPhone|iPad|iPod/i.test(ua)) device = 'iOS';
+            else if (/Windows/i.test(ua)) device = 'Windows';
+            else if (/Macintosh|Mac OS X/i.test(ua)) device = 'MacOS';
+            return device;
+        }
+
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browser = 'Неизвестно';
+            if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Edg/i.test(ua)) browser = 'Edge';
+            else if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            return browser;
+        }
+
+        async function sendToTelegram(buttonName) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU');
+            const timeStr = now.toLocaleTimeString('ru-RU');
+            const device = getDeviceInfo();
+            const browser = getBrowserInfo();
+            const referrer = document.referrer || 'Прямой заход';
+
+            const message = `🔔 <b>Новая конверсия!</b>\n\n` +
+                `📌 <b>Оффер:</b> ${OFFER_NAME}\n` +
+                `📅 <b>Дата:</b> ${dateStr}\n` +
+                `⏰ <b>Время:</b> ${timeStr}\n` +
+                `🔘 <b>Кнопка:</b> ${buttonName}\n` +
+                `📱 <b>Устройство:</b> ${device}\n` +
+                `🌐 <b>Браузер:</b> ${browser}\n` +
+                `🔗 <b>Источник:</b> ${referrer}\n\n` +
+                `#лид #веббанкир`;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (error) {
+                console.error('Ошибка отправки в Telegram:', error);
+            }
+        }
+
+        // Вешаем обработчик на все кнопки с классом btn-primary
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn-primary');
+
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Определяем, какая кнопка нажата
+                    let buttonName = 'неизвестно';
+                    if (btn.closest('.hero')) buttonName = 'hero';
+                    else if (btn.closest('.cta-section')) buttonName = 'cta';
+
+                    // Сначала отправляем уведомление
+                    sendToTelegram(buttonName).then(() => {
+                        // Потом переходим по партнёрской ссылке
+                        window.location.href = PARTNER_LINK;
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
