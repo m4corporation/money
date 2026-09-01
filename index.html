@@ -1,678 +1,562 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" type="image/svg+xml" href="logo.svg">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WebBankir — займ онлайн</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --yellow:#ffe66d;
-  --yellow2:#fff8d6;
-  --black:#151515;
-  --muted:#737373;
-  --line:#eaeaea;
-  --soft:#fafafa;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Inter,Arial,sans-serif;color:var(--black);background:#fff;-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-.container{width:min(1080px,calc(100% - 40px));margin:auto}
-
-/* header */
-.header{height:72px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid #eee;display:flex;align-items:center;position:sticky;top:0;z-index:20}
-.header-inner{display:flex;align-items:center;justify-content:space-between}
-.logo img{display:block;width:155px;height:auto;max-height:42px}
-.online{font-size:12px;font-weight:500;color: black;background:var(--yellow2);padding:8px 14px;border-radius:100px}
-.logo{
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-weight: 200;
-}
- .logo span {
-     position: absolute;
-     margin-left: 115px;
-}   
-    
-/* hero */
-.hero{background:linear-gradient(135deg,#fff 0%,#fffdf2 42%,#fff4b5 100%);overflow:hidden}
-.hero-inner{min-height:590px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:54px 0 70px}
-.hero-copy{position:relative;z-index:2}
-.tag{display:inline-block;background:var(--yellow2);color:#574900;border-radius:100px;padding:8px 15px;font-size:12px;margin-bottom:20px}
-h1{font-size:clamp(42px,5.3vw,68px);line-height:1.02;letter-spacing:-3.4px;font-weight:100;max-width:610px}
-h2{font-weight:100;}
-h3{font-weight:600;}
-h1 span{margin-left: 100px; padding:10px, 100px 10px;border-radius:10px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.lead{font-size:17px;line-height:1.55;color:#555;max-width:500px;margin-top:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:black;border:0;border-radius:20px;padding:18px 30px;font-size:15px;font-weight:500;cursor:pointer;transition:.2s;box-shadow:0 8px 25px rgba(255,218,61,.22)}
-.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,218,61,.32)}
-.hero .btn{margin-top:27px; margin-left: 120px;}
-.small{font-size:11px;color:#888;margin-top:11px; margin-left: 30px;}
-.small2{font-size:11px;color:#888;margin-top:11px; margin-left: 0px;}
-.hero-art{height:500px;display:flex;align-items:center;justify-content:center;position:relative}
-.hero-art:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;background:#ffe778;opacity:.43;filter:blur(22px)}
-.hero-art img{border-radius: 50px; position:relative;width:620px;max-width:125%;transform:translateX(5%);filter:drop-shadow(0 25px 30px rgba(0,0,0,.11));animation:float 5s ease-in-out infinite}
-@keyframes float{50%{transform:translate(5%,-8px) rotate(.5deg)}}
-
-/* trust */
-.trust{border-bottom:1px solid var(--line);background:#fff}
-.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);padding:22px 0}
-.trust-item{text-align:center;border-right:1px solid var(--line);font-size:13px;font-weight:600}
-.trust-item:last-child{border:0}
-.trust-item span{display:block;color:#888;font-size:11px;font-weight:400;margin-top:3px}
-
-/* simple benefits */
-.section{padding:82px 0}
-.center{text-align:center}
-.kicker{text-transform:uppercase;letter-spacing:1.7px;font-size:10px;font-weight:700;color:#999;margin-bottom:10px}
-.title{font-size:clamp(31px,4vw,46px);line-height:1.08;letter-spacing:-2px;font-weight:100}
-.subtitle{color:var(--muted);font-size:14px;margin-top:11px}
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
-.card{border:1px solid var(--line);border-radius:20px;padding:25px;background:#fff;transition:.2s}
-.card:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(0,0,0,.06)}
-.icon{width:38px;height:38px;border-radius:12px;background:var(--yellow2);display:grid;place-items:center;font-weight:800;font-size:13px;margin-bottom:22px}
-.card h3{font-size:16px;margin-bottom:7px}
-.card p{font-size:13px;color:var(--muted);line-height:1.55}
-
-/* steps */
-.steps-section{background:var(--soft)}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:35px}
-.step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px}
-.num{font-size:11px;color:#999;font-weight:700;margin-bottom:40px}
-.step h3{font-size:17px;margin-bottom:7px}
-.step p{font-size:13px;color:var(--muted)}
-
-/* final */
-.final{padding:85px 0;background-color: #fffcf3}
-.final-box{text-align:center;max-width:680px;margin:auto}
-.final .title{font-size:clamp(34px,5vw,54px)}
-.final .subtitle{max-width:500px;margin:13px auto 0}
-.final .btn{margin-top:25px}
-
-/* footer: original legal marking preserved */
-.footer{background:#f7f7f7;border-top:1px solid #e9e9e9;text-align:center;padding:30px 0 34px;color:#888;font-size:10px;line-height:1.65}
-.footer strong{display:block;color:#555;font-weight:600;margin-bottom:5px}
-.erid{margin-top:9px;font-size:9px;color:#aaa}
-
-/* =========================================================
-   ОПТИМИЗИРОВАННЫЕ МЕДИА-ЗАПРОСЫ (только для мобильных)
-   Десктопные стили выше НЕ ИЗМЕНЕНЫ
-   ========================================================= */
-
-@media (max-width: 899px) {
-    /* Общие исправления */
-    html, body {
-        overflow-x: hidden;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .container {
-        width: min(100% - 32px, 1080px);
-    }
-
-    /* Герой — перестраиваем в колонку */
-    .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        min-height: auto;
-        padding: 40px 0 30px;
-    }
-
-    .hero-copy {
-        width: 100%;
-        max-width: 100%;
-        text-align: center;
-        padding: 0 8px;
-    }
-
-    .hero h1 {
-        max-width: 100%;
-        font-size: clamp(40px, 7.5vw, 58px);
-        letter-spacing: -2.4px;
-        margin: 0 auto;
-    }
-
-    .hero h1 span {
-        margin-left: 0;
-        padding: 2px 10px;
-    }
-
-    .lead {
-        max-width: 560px;
-        margin: 16px auto 0;
-        font-size: 16px;
-    }
-
-    /* Кнопка и подпись — центрируем */
-    .hero .btn {
-        margin: 22px auto 0;
-        display: inline-flex;
-    }
-
-    .small {
-        margin: 10px auto 0;
-        text-align: center;
-        max-width: 340px;
-    }
-
-    /* Картинка */
-    .hero-art {
-        width: 100%;
-        height: auto;
-        min-height: 280px;
-        margin-top: -8px;
-        overflow: visible;
-    }
-
-    .hero-art:before {
-        width: 320px;
-        height: 320px;
-        filter: blur(20px);
-    }
-
-    .hero-art img {
-        width: min(520px, 92%);
-        max-width: 92%;
-        transform: none;
-        animation: none; /* убираем анимацию на мобилках для плавности */
-        border-radius: 30px;
-    }
-
-    /* Блок доверия */
-    .trust-grid {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 16px 0;
-        gap: 0;
-    }
-
-    .trust-item {
-        padding: 8px 4px;
-        font-size: 12px;
-        border-right: 1px solid var(--line);
-    }
-
-    .trust-item:last-child {
-        border-right: 0;
-    }
-
-    .trust-item span {
-        font-size: 10px;
-        margin-top: 2px;
-    }
-
-    /* Секции — карточки в 2 колонки */
-    .benefits {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 30px;
-    }
-
-    .steps {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 30px;
-    }
-
-    .section {
-        padding: 60px 0;
-    }
-
-    .title {
-        font-size: clamp(30px, 5vw, 42px);
-        letter-spacing: -1.8px;
-    }
-
-    .subtitle {
-        font-size: 13px;
-        margin-top: 8px;
-    }
-
-    .card,
-    .step {
-        padding: 22px 18px;
-        border-radius: 16px;
-    }
-
-    .card h3,
-    .step h3 {
-        font-size: 15px;
-    }
-
-    .card p,
-    .step p {
-        font-size: 12.5px;
-    }
-
-    .icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        margin-bottom: 14px;
-        font-size: 12px;
-    }
-
-    .num {
-        margin-bottom: 28px;
-        font-size: 10px;
-    }
-
-    /* Финал */
-    .final {
-        padding: 60px 0;
-    }
-
-    .final .title {
-        font-size: clamp(32px, 6vw, 46px);
-    }
-
-    .final .btn {
-        margin-top: 22px;
-    }
-}
-
-/* Телефоны (узкие экраны) */
-@media (max-width: 599px) {
-    .container {
-        width: calc(100% - 24px);
-    }
-
-    /* Шапка */
-    .header {
-        height: 60px;
-    }
-
-    .header-inner {
-        gap: 8px;
-    }
-
-    .logo {
-        gap: 6px;
-        max-width: 70%;
-    }
-
-    .logo img {
-        width: 32px;
-        height: 32px;
-        flex: 0 0 auto;
-        object-fit: contain;
-    }
-
-    .logo span {
-        position: static;
-        margin-left: 0;
-        font-size: 16px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .online {
-        font-size: 10px;
-        padding: 6px 10px;
-        flex-shrink: 0;
-    }
-
-    /* Герой */
-    .hero-inner {
-        padding: 28px 0 20px;
-        gap: 6px;
-    }
-
-    .hero h1 {
-        font-size: clamp(32px, 10vw, 44px);
-        letter-spacing: -1.8px;
-    }
-
-    .hero h1 span {
-        padding: 2px 6px;
-        border-radius: 6px;
-    }
-
-    .lead {
-        font-size: 14px;
-        line-height: 1.5;
-        margin-top: 12px;
-        max-width: 100%;
-    }
-
-    .hero .btn {
-        padding: 14px 24px;
-        font-size: 14px;
-        min-height: 48px;
-        border-radius: 14px;
-        margin-top: 18px;
-        width: 100%;
-        max-width: 320px;
-    }
-
-    .small {
-        font-size: 9px;
-        max-width: 280px;
-        margin-top: 8px;
-        line-height: 1.4;
-    }
-
-    .hero-art {
-        min-height: 200px;
-        margin-top: -2px;
-    }
-
-    .hero-art:before {
-        width: 220px;
-        height: 220px;
-        filter: blur(16px);
-    }
-
-    .hero-art img {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 20px;
-    }
-
-    /* Доверие */
-    .trust-grid {
-        padding: 12px 0;
-    }
-
-    .trust-item {
-        font-size: 10px;
-        padding: 6px 2px;
-    }
-
-    .trust-item span {
-        font-size: 8px;
-        margin-top: 1px;
-    }
-
-    /* Секции */
-    .section {
-        padding: 45px 0;
-    }
-
-    .benefits,
-    .steps {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-top: 22px;
-    }
-
-    .title {
-        font-size: clamp(26px, 8vw, 34px);
-        letter-spacing: -1.4px;
-    }
-
-    .kicker {
-        font-size: 9px;
-        letter-spacing: 1.2px;
-    }
-
-    .subtitle {
-        font-size: 12px;
-    }
-
-    .card,
-    .step {
-        padding: 18px 16px;
-        border-radius: 14px;
-    }
-
-    .card h3,
-    .step h3 {
-        font-size: 14px;
-    }
-
-    .card p,
-    .step p {
-        font-size: 12px;
-        line-height: 1.5;
-    }
-
-    .icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        font-size: 11px;
-    }
-
-    .num {
-        margin-bottom: 20px;
-        font-size: 9px;
-    }
-
-    /* Финал */
-    .final {
-        padding: 48px 0;
-    }
-
-    .final .title {
-        font-size: clamp(28px, 8.5vw, 38px);
-    }
-
-    .final .subtitle {
-        font-size: 13px;
-        max-width: 100%;
-    }
-
-    .final .btn {
-        width: 100%;
-        max-width: 300px;
-        margin-top: 18px;
-    }
-
-    /* Футер */
-    .footer {
-        padding: 20px 0 24px;
-        font-size: 8px;
-        line-height: 1.6;
-    }
-
-    .footer p {
-        font-size: 8px;
-    }
-
-    .erid {
-        font-size: 7px;
-    }
-}
-
-/* Очень маленькие экраны */
-@media (max-width: 379px) {
-    .container {
-        width: calc(100% - 18px);
-    }
-
-    .logo span {
-        font-size: 14px;
-    }
-
-    .online {
-        font-size: 9px;
-        padding: 5px 8px;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-        letter-spacing: -1.2px;
-    }
-
-    .hero .btn {
-        font-size: 13px;
-        padding: 12px 18px;
-        min-height: 44px;
-        max-width: 280px;
-    }
-
-    .hero-art {
-        min-height: 170px;
-    }
-
-    .hero-art:before {
-        width: 180px;
-        height: 180px;
-        filter: blur(14px);
-    }
-
-    .trust-item {
-        font-size: 9px;
-        padding: 4px 2px;
-    }
-
-    .trust-item span {
-        font-size: 7px;
-    }
-
-    .title {
-        font-size: 24px;
-        letter-spacing: -1px;
-    }
-
-    .card,
-    .step {
-        padding: 14px 12px;
-    }
-
-    .final .title {
-        font-size: 26px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Быстроденьги — первый займ под 0% до 30 000 ₽</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5b7cfa;
+            --primary-dark: #3d5ce0;
+            --primary-light: #7d9aff;
+            --primary-soft: #eef2ff;
+            --primary-text: #2c3e6b;
+            --accent: #00c2a8;
+            --bg: #ffffff;
+            --bg-soft: #f8faff;
+            --text: #0d0d0d;
+            --text-secondary: #555;
+            --text-muted: #999;
+            --border: #e6eaf2;
+            --shadow-sm: 0 1px 4px rgba(0,0,0,0.04);
+            --shadow: 0 6px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.08);
+            --radius: 20px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+        
+      
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ШАПКА */
+        .header {
+            padding: 16px 0;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #000c22;
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            font-weight: 650;
+            font-size: 23px;
+            
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .header-badge {
+            background: var(--primary-soft);
+            color: var(--primary-text);
+            padding: 7px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ГЛАВНЫЙ ЭКРАН */
+        .hero {
+            padding: 50px 0 30px;
+            text-align: center;
+        }
+        .btn-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #eef2ff 0%, #f0fdfa 100%);
+            color: var(--primary-text);
+            padding: 9px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(91,124,250,0.15);
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 7vw, 52px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: #0a0a0a;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            max-width: 460px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* КНОПКИ */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            padding: 17px 48px;
+            font-size: 17px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(91,124,250,0.3);
+            letter-spacing: 0.2px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(91,124,250,0.4);
+        }
+
+        /* СЕКЦИИ */
+        .section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: clamp(22px, 5vw, 30px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #0a0a0a;
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        /* ПРЕИМУЩЕСТВА */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .benefit-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 22px 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            max-width: 300px;          /* ← подбери нужную ширину */
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: rgba(91,124,250,0.3);
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-soft);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .benefit-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--primary);
+        }
+
+        .benefit-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .benefit-card p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* УСЛОВИЯ */
+        .req-card {
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .req-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .req-title h7 {
+            font-weight: 400;
+        }
+
+        .req-list {
+            list-style: none;
+        }
+
+        .req-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            padding: 8px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .req-list li:last-child {
+            border-bottom: none;
+        }
+
+        .req-check {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 40px 0 60px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: 650;
+            margin-bottom: 10px;
+        }
+
+        .cta-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: var(--bg-soft);
+            padding: 24px 0;
+            text-align: center;
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.7;
+            border-top: 1px solid var(--border);
+        }
+
+        /* АДАПТИВ */
+        @media (max-width: 480px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero-subtitle {
+                font-size: 14px;
+            }
+            .btn-primary {
+                padding: 15px 32px;
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="container header-inner">
-    <a class="logo"><img src="logo.svg" alt="WebBankir"><span>WEBBANKIR</span></a>
-    <div class="online">Онлайн 24/7</div>
-  </div>
-</header>
+    <!-- ХЕДЕР -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">
+                    Быстроденьги
+                </a>
+                <div class="header-badge">Онлайн 24/7</div>
+            </div>
+        </div>
+    </header>
 
-<main>
-<section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-copy">
-      <h1>Первый займ <span>под 0%</span></h1>
-      <p class="lead">До 30 000 ₽ на первый займ. Простая онлайн-заявка без визита в офис и лишних документов.</p>
-      <a class="btn btn-primary" href="#">Получить займ</a>
-      <p class="small">Переход на официальный сайт партнёра для оформления заявки</p>
-    </div>
-    <div class="hero-art">
-      <img src="hero.png" alt="">
-    </div>
-  </div>
-</section>
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-tag">Акция «Без процентов»</div>
+            <h1>
+                Первый займ<br>
+                <span class="highlight">под 0% до 30 000 ₽</span>
+            </h1>
+            <p class="hero-subtitle">
+                Деньги на карту за 15 минут
+            </p>
+            <a href="https://t.fincpanetwork.ru/click/64288/613?erid=LjN8JtHPe" class="btn-primary" id="btn-hero">Перейти к оформлению</a>
+            <p class="btn-note">Переход на официальный сайт партнёра для оформления заявки</p>
+        </div>
+    </section>
 
-<section class="trust">
-  <div class="container trust-grid">
-    <div class="trust-item">Быстро<span>решение онлайн</span></div>
-    <div class="trust-item">24/7<span>заявка в любое время</span></div>
-    <div class="trust-item">Онлайн<span>без визита в офис</span></div>
-  </div>
-</section>
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Почему Быстроденьги</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>15 минут</h3>
+                    <p>От заявки до денег на карте.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>0% первые 10 дней</h3>
+                    <p>До 30 000 ₽ — без процентов.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+                    </div>
+                    <h3>На карту или СБП</h3>
+                    <p>Деньги приходят мгновенно.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    </div>
+                    <h3>До 100 000 ₽ на карту</h3>
+                    <p>Займ от 3 до 180 дней.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="section">
-  <div class="container">
-    <div class="center">
-      <div class="kicker">Всё просто</div>
-      <h2 class="title">Получить деньги онлайн — легко</h2>
-      <p class="subtitle">Минимум действий, максимум удобства.</p>
-    </div>
-    <div class="benefits">
-      <article class="card"><div class="icon">1</div><h3>Быстро</h3><p>Заполните заявку онлайн и дождитесь решения.</p></article>
-      <article class="card"><div class="icon">2</div><h3>Удобно</h3><p>Всё оформление проходит дистанционно — с телефона или компьютера.</p></article>
-      <article class="card"><div class="icon">3</div><h3>Круглосуточно</h3><p>Подать заявку можно в любое удобное время, без выходных.</p></article>
-    </div>
-  </div>
-</section>
+    <!-- УСЛОВИЯ АКЦИИ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Условия акции</h2>
+            <p class="section-subtitle">Честно и прозрачно.</p>
+            <div class="req-card">
+                <div class="req-title">«Без процентов» <h7>для новых клиентов</h7></div>
+                <ul class="req-list">
+                    <li><span class="req-check">✓</span> Сумма от 3 000 до 30 000 ₽</li>
+                   
+                    <li><span class="req-check">✓</span> 0% с 1-го по 10-й день</li>
+                    <li><span class="req-check">✓</span> После 10-го дня — 0,8% в день</li>
+                    <li><span class="req-check">✓</span> Для физлиц, впервые оформляющих займ</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-<section class="section steps-section">
-  <div class="container">
-    <div class="center">
-      <div class="kicker">Как это работает</div>
-      <h2 class="title">Три шага</h2>
-    </div>
-    <div class="steps">
-      <article class="step"><div class="num">ШАГ 1</div><h3>Оставьте заявку</h3><p>Перейдите на сайт и заполните короткую форму.</p></article>
-      <article class="step"><div class="num">ШАГ 2</div><h3>Получите решение</h3><p>Дождитесь результата рассмотрения заявки.</p></article>
-      <article class="step"><div class="num">ШАГ 3</div><h3>Получите деньги</h3><p>После одобрения выберите удобный способ получения.</p></article>
-    </div>
-  </div>
-</section>
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Готовы получить деньги?</h2>
+            <p class="cta-subtitle">Первый займ под 0% до 30 000 ₽</p>
+            <a href="https://t.fincpanetwork.ru/click/64288/613?erid=LjN8JtHPe" class="btn-primary" id="btn-cta">Перейти к оформлению</a>
+            <p class="btn-note">Переход на официальный сайт партнёра для оформления заявки</p>
+        </div>
+    </section>
 
-<section class="final">
-  <div class="container final-box">
-    <div class="kicker">Готовы начать?</div>
-    <h2 class="title">Оформите заявку онлайн</h2>
-    <p class="subtitle">Первый займ до 30 000 ₽ под 0% на срок до 21 дня.</p>
-    <a class="btn btn-primary" href="#">Получить займ</a>
-  </div>
-</section>
-</main>
+    <!-- ФУТЕР -->
+    <footer class="footer">
+        <div class="container">
+            <p style="font-weight: 600; margin-bottom: 6px; color: #777;">Реклама. ООО МКК «Быстроденьги»</p>
+            <p>ПСК 284,000% – 292,000% годовых. Сумма от 1 000 до 100 000 ₽. Срок от 3 до 180 дней.<br>
+            Ставка от 0% до 0,8% в день.<br>
+            Первый займ до 30 000 ₽ под 0%. Не является публичной офертой.</p>
+            <p style="margin-top: 10px; font-size: 10px; color: #bbb;">erid: LjN8JtHPe</p>
+        </div>
+    </footer>
 
-<footer class="footer">
-  <div class="container">
-    <strong>Реклама. ООО МКК «ВЭББАНКИР»</strong>
-    <p>ПСК от 0% до 292% годовых. Сумма от 1 000 до 100 000 ₽. Срок от 7 до 365 дней.<br>
-    Первый займ до 30 000 ₽ под 0% на срок до 21 дня.<br>
-    Не является публичной офертой. Условия уточняйте на официальном сайте.</p>
-    <p class="erid">erid: LjN8KTuXh</p>
-  </div>
-</footer>
+    <!-- СКРИПТЫ -->
+    <script>
+        // ============================================
+        // НАСТРОЙКИ TELEGRAM
+        // ============================================
+        const TELEGRAM_BOT_TOKEN = 'ТВОЙ_ТОКЕН_ОТ_BOTFATHER';
+        const TELEGRAM_CHAT_ID = 'ТВОЙ_ID_ИЗ_GETMYID_BOT';
+        const OFFER_NAME = '💰 Быстроденьги — Займ';
+        // ============================================
 
-<script>
-const TELEGRAM_BOT_TOKEN = '8691459201:AAHZn4SEe2n-NihhupFe_w8Yf3oiPKgT8sw';
-const TELEGRAM_CHAT_ID = '1311627838';
-const PARTNER_LINK = 'https://t.fincpanetwork.ru/click/64288/77?erid=LjN8JwPDS';
-const OFFER_NAME = '💰 WebBankir — Займ';
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            if (/Android/i.test(ua)) return 'Android';
+            if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+            if (/Windows/i.test(ua)) return 'Windows';
+            if (/Macintosh|Mac OS X/i.test(ua)) return 'MacOS';
+            return 'Неизвестно';
+        }
 
-function getDeviceInfo(){
-  const ua=navigator.userAgent;
-  if(/Android/i.test(ua))return'Android';
-  if(/iPhone|iPad|iPod/i.test(ua))return'iOS';
-  if(/Windows/i.test(ua))return'Windows';
-  if(/Macintosh|Mac OS X/i.test(ua))return'MacOS';
-  return'Неизвестно';
-}
-function getBrowserInfo(){
-  const ua=navigator.userAgent;
-  if(/Firefox/i.test(ua))return'Firefox';
-  if(/Edg/i.test(ua))return'Edge';
-  if(/Chrome/i.test(ua)&&!/Edg/i.test(ua))return'Chrome';
-  if(/Safari/i.test(ua)&&!/Chrome/i.test(ua))return'Safari';
-  return'Неизвестно';
-}
-async function sendToTelegram(buttonName){
-  const now=new Date();
-  const message=`🔔 <b>Новая конверсия!</b>\n\n`+
-  `📌 <b>Оффер:</b> ${OFFER_NAME}\n`+
-  `📅 <b>Дата:</b> ${now.toLocaleDateString('ru-RU')}\n`+
-  `⏰ <b>Время:</b> ${now.toLocaleTimeString('ru-RU')}\n`+
-  `🔘 <b>Кнопка:</b> ${buttonName}\n`+
-  `📱 <b>Устройство:</b> ${getDeviceInfo()}\n`+
-  `🌐 <b>Браузер:</b> ${getBrowserInfo()}\n`+
-  `🔗 <b>Источник:</b> ${document.referrer||'Прямой заход'}`;
-  try{
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:'HTML'})
-    });
-  }catch(e){console.error('Ошибка Telegram:',e)}
-}
-document.addEventListener('DOMContentLoaded',()=>{
- document.querySelectorAll('.btn-primary').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-   e.preventDefault();
-   const buttonName=btn.closest('.hero')?'hero':'cta';
-   sendToTelegram(buttonName).then(()=>{window.location.href=PARTNER_LINK});
-  });
- });
-});
-</script>
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            if (/Firefox/i.test(ua)) return 'Firefox';
+            if (/Edg/i.test(ua)) return 'Edge';
+            if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) return 'Chrome';
+            if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
+            return 'Неизвестно';
+        }
+
+        function getUtmParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                utm_source: params.get('utm_source') || 'Не указан',
+                utm_campaign: params.get('utm_campaign') || 'Не указан',
+                utm_content: params.get('utm_content') || 'Не указан',
+                utm_term: params.get('utm_term') || 'Не указан'
+            };
+        }
+
+        async function sendToTelegram(buttonName) {
+            const now = new Date();
+            const data = {
+                offer: OFFER_NAME,
+                button: buttonName,
+                date: now.toLocaleDateString('ru-RU'),
+                time: now.toLocaleTimeString('ru-RU'),
+                device: getDeviceInfo(),
+                browser: getBrowserInfo(),
+                referrer: document.referrer || 'Прямой заход',
+                ...getUtmParams()
+            };
+
+            const message = `🔔 <b>Новая конверсия!</b>\n\n` +
+                `📌 <b>Оффер:</b> ${data.offer}\n` +
+                `📅 <b>Дата:</b> ${data.date}\n` +
+                `⏰ <b>Время:</b> ${data.time}\n` +
+                `🔘 <b>Кнопка:</b> ${data.button}\n` +
+                `📱 <b>Устройство:</b> ${data.device}\n` +
+                `🌐 <b>Браузер:</b> ${data.browser}\n` +
+                `🔗 <b>Источник:</b> ${data.referrer}\n` +
+                `📊 <b>UTM Source:</b> ${data.utm_source}\n` +
+                `📊 <b>UTM Campaign:</b> ${data.utm_campaign}\n` +
+                `📊 <b>UTM Content:</b> ${data.utm_content}\n` +
+                `📊 <b>UTM Term:</b> ${data.utm_term}\n\n`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (error) {
+                console.error('Ошибка Telegram:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-primary').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let buttonName = 'неизвестно';
+                    if (btn.id === 'btn-hero') buttonName = 'hero';
+                    else if (btn.id === 'btn-cta') buttonName = 'cta';
+
+                    // Отправляем конверсию в Telegram
+                    sendToTelegram(buttonName);
+
+                    // Яндекс.Метрика
+                    if (typeof ym !== 'undefined') {
+                        ym('ВАШ_НОМЕР_СЧЁТЧИКА', 'reachGoal', 'click_button');
+                    }
+
+                    // Переход по партнёрской ссылке
+                    setTimeout(() => {
+                        window.location.href = btn.href;
+                    }, 300);
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
