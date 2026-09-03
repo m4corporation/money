@@ -455,108 +455,85 @@
 
     <!-- СКРИПТЫ -->
     <script>
-        // ============================================
-        // НАСТРОЙКИ TELEGRAM
-        // ============================================
-        const TELEGRAM_BOT_TOKEN = '8691459201:AAEbjzfEdC9jCuy4Nza1AoAVKUjOczT1rfo';
-        const TELEGRAM_CHAT_ID = '1311627838';
-        const OFFER_NAME = '💰 Быстроденьги — Займ';
-        // ============================================
+const TELEGRAM_BOT_TOKEN = 'ТВОЙ_ТОКЕН';
+const TELEGRAM_CHAT_ID = 'ТВОЙ_ID';
+const PARTNER_LINK = 'https://t.fincpanetwork.ru/click/64288/613?erid=LjN8JtHPe';
+const OFFER_NAME = '💵 Быстроденьги — Займ';
 
-        function getDeviceInfo() {
-            const ua = navigator.userAgent;
-            if (/Android/i.test(ua)) return 'Android';
-            if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
-            if (/Windows/i.test(ua)) return 'Windows';
-            if (/Macintosh|Mac OS X/i.test(ua)) return 'MacOS';
-            return 'Неизвестно';
+function getDeviceInfo(){
+  const ua=navigator.userAgent;
+  if(/Android/i.test(ua))return'Android';
+  if(/iPhone|iPad|iPod/i.test(ua))return'iOS';
+  if(/Windows/i.test(ua))return'Windows';
+  if(/Macintosh|Mac OS X/i.test(ua))return'MacOS';
+  return'Неизвестно';
+}
+
+function getBrowserInfo(){
+  const ua=navigator.userAgent;
+  if(/Firefox/i.test(ua))return'Firefox';
+  if(/Edg/i.test(ua))return'Edge';
+  if(/Chrome/i.test(ua)&&!/Edg/i.test(ua))return'Chrome';
+  if(/Safari/i.test(ua)&&!/Chrome/i.test(ua))return'Safari';
+  return'Неизвестно';
+}
+
+function getUtmParams(){
+  const p=new URLSearchParams(window.location.search);
+  return{
+    utm_source:p.get('utm_source')||'Не указан',
+    utm_campaign:p.get('utm_campaign')||'Не указан',
+    utm_content:p.get('utm_content')||'Не указан',
+    utm_term:p.get('utm_term')||'Не указан'
+  };
+}
+
+async function sendToTelegram(buttonName){
+  const now=new Date();
+  const utm=getUtmParams();
+  const message=`🔔 <b>Новая конверсия!</b>\n\n`+
+  `📌 <b>Оффер:</b> ${OFFER_NAME}\n`+
+  `📅 <b>Дата:</b> ${now.toLocaleDateString('ru-RU')}\n`+
+  `⏰ <b>Время:</b> ${now.toLocaleTimeString('ru-RU')}\n`+
+  `🔘 <b>Кнопка:</b> ${buttonName}\n`+
+  `📱 <b>Устройство:</b> ${getDeviceInfo()}\n`+
+  `🌐 <b>Браузер:</b> ${getBrowserInfo()}\n`+
+  `🔗 <b>Источник:</b> ${document.referrer||'Прямой заход'}\n`+
+  `📊 <b>UTM Source:</b> ${utm.utm_source}\n`+
+  `📊 <b>UTM Campaign:</b> ${utm.utm_campaign}\n`+
+  `📊 <b>UTM Content:</b> ${utm.utm_content}\n`+
+  `📊 <b>UTM Term:</b> ${utm.utm_term}\n\n`+
+  `#лид #belkacredit`;
+
+  try{
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:'HTML'})
+    });
+  }catch(e){
+    console.error('Ошибка Telegram:',e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.btn-primary').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.preventDefault();
+      const buttonName=btn.closest('.hero')?'hero':'cta';
+
+      // Сначала отправляем, потом переходим
+      sendToTelegram(buttonName).then(()=>{
+        // Метрика после отправки
+        if(typeof ym!=='undefined'){
+          ym(112149690,'reachGoal','click_button');
         }
-
-        function getBrowserInfo() {
-            const ua = navigator.userAgent;
-            if (/Firefox/i.test(ua)) return 'Firefox';
-            if (/Edg/i.test(ua)) return 'Edge';
-            if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) return 'Chrome';
-            if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
-            return 'Неизвестно';
-        }
-
-        function getUtmParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                utm_source: params.get('utm_source') || 'Не указан',
-                utm_campaign: params.get('utm_campaign') || 'Не указан',
-                utm_content: params.get('utm_content') || 'Не указан',
-                utm_term: params.get('utm_term') || 'Не указан'
-            };
-        }
-
-        async function sendToTelegram(buttonName) {
-            const now = new Date();
-            const data = {
-                offer: OFFER_NAME,
-                button: buttonName,
-                date: now.toLocaleDateString('ru-RU'),
-                time: now.toLocaleTimeString('ru-RU'),
-                device: getDeviceInfo(),
-                browser: getBrowserInfo(),
-                referrer: document.referrer || 'Прямой заход',
-                ...getUtmParams()
-            };
-
-            const message = `🔔 <b>Новая конверсия!</b>\n\n` +
-                `📌 <b>Оффер:</b> ${data.offer}\n` +
-                `📅 <b>Дата:</b> ${data.date}\n` +
-                `⏰ <b>Время:</b> ${data.time}\n` +
-                `🔘 <b>Кнопка:</b> ${data.button}\n` +
-                `📱 <b>Устройство:</b> ${data.device}\n` +
-                `🌐 <b>Браузер:</b> ${data.browser}\n` +
-                `🔗 <b>Источник:</b> ${data.referrer}\n` +
-                `📊 <b>UTM Source:</b> ${data.utm_source}\n` +
-                `📊 <b>UTM Campaign:</b> ${data.utm_campaign}\n` +
-                `📊 <b>UTM Content:</b> ${data.utm_content}\n` +
-                `📊 <b>UTM Term:</b> ${data.utm_term}\n\n`;
-
-            try {
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-            } catch (error) {
-                console.error('Ошибка Telegram:', error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.btn-primary').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    let buttonName = 'неизвестно';
-                    if (btn.id === 'btn-hero') buttonName = 'hero';
-                    else if (btn.id === 'btn-cta') buttonName = 'cta';
-
-                    // Отправляем конверсию в Telegram
-                    sendToTelegram(buttonName);
-
-                    // Яндекс.Метрика
-                    if (typeof ym !== 'undefined') {
-                        ym('112149690', 'reachGoal', 'click_button');
-                    }
-
-                    // Переход по партнёрской ссылке
-                    setTimeout(() => {
-                        window.location.href = btn.href;
-                    }, 300);
-                });
-            });
-        });
-    </script>
+        window.location.href=PARTNER_LINK;
+      });
+    });
+  });
+});
+</script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
