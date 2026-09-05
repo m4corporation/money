@@ -522,14 +522,20 @@ document.addEventListener('DOMContentLoaded',()=>{
       e.preventDefault();
       const buttonName=btn.closest('.hero')?'hero':'cta';
 
-      // Сначала отправляем, потом переходим
-      sendToTelegram(buttonName).then(()=>{
-        // Метрика после отправки
-        if(typeof ym!=='undefined'){
-          ym(112149690,'reachGoal','click_button');
-        }
-        window.location.href=PARTNER_LINK;
-      });
+      // 1. Сразу переходим по ссылке (главное действие)
+      window.location.href = btn.href || PARTNER_LINK;
+
+      // 2. Пытаемся отправить в Telegram в фоне (если работает)
+      try {
+        sendToTelegram(buttonName);
+      } catch(e) {
+        // Telegram недоступен — не страшно
+      }
+
+      // 3. Метрика точно зафиксирует клик
+      if(typeof ym!=='undefined'){
+        ym(112149690,'reachGoal','click_button');
+      }
     });
   });
 });
